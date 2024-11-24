@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Básica</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div id="loginSection" class="section">
+            <h1>Iniciar Sesión</h1>
+            <form id="loginForm">
+                <label for="username">Usuario:</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit">Ingresar</button>
+            </form>
+            <p><a href="#" onclick="showSection('resetSection')">¿Olvidaste tu contraseña?</a></p>
+        </div>
+
+        <div id="resetSection" class="section" style="display:none;">
+            <h2>Restablecer Contraseña</h2>
+            <form id="resetForm">
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" id="email" name="email" required>
+                <button type="submit">Enviar</button>
+            </form>
+            <p><a href="#" onclick="showSection('loginSection')">Volver a Iniciar Sesión</a></p>
+        </div>
+
+        <div id="mainMenu" class="section" style="display:none;">
+            <h2>Menú Principal</h2>
+            <ul>
+                <li><a href="#" onclick="showSection('publishSection')">Publicar Solicitud</a></li>
+                <li><a href="#" onclick="showSection('uploadSection')">Cargar Documentos</a></li>
+                <li><a href="#" onclick="showSection('statusSection')">Estado de la Solicitud</a></li>
+                <li><a href="#" onclick="showSection('consultSection')">Consultar Solicitud</a></li>
+                <li><a href="#" onclick="showSection('paymentsSection')">Pagos y Envíos</a></li>
+                <li><a href="#" onclick="showSection('ratingsSection')">Calificar Servicio</a></li>
+            </ul>
+        </div>
+
+        <div id="publishSection" class="section" style="display:none;">
+            <h2>Publicar Solicitud</h2>
+            <form id="publishForm">
+                <label for="projectName">Nombre del Proyecto:</label>
+                <input type="text" id="projectName" name="projectName" maxlength="20" required>
+                <label for="description">Descripción:</label>
+                <textarea id="description" name="description" maxlength="300" required></textarea>
+                <label for="requirements">Requisitos:</label>
+                <textarea id="requirements" name="requirements" maxlength="100" required></textarea>
+                <button type="submit">Crear</button>
+            </form>
+            <p id="radicadoMessage"></p>
+            <p><a href="#" onclick="showSection('mainMenu')">Volver al Menú Principal</a></p>
+        </div>
+
+        <div id="uploadSection" class="section" style="display:none;">
+            <h2>Cargar Documentos</h2>
+            <form id="uploadForm">
+                <label for="file">Seleccionar archivo:</label>
+                <input type="file" id="file" name="file" required>
+                <button type="submit">Cargar</button>
+            </form>
+            <p><a href="#" onclick="showSection('mainMenu')">Volver al Menú Principal</a></p>
+        </div>
+
+        <div id="statusSection" class="section" style="display:none;">
+            <h2>Estado de la Solicitud</h2>
+            <form id="statusForm">
+                <label for="statusRadicado">Digite Número de Radicado:</label>
+                <input type="text" id="statusRadicado" name="statusRadicado" required>
+                <button type="button" onclick="consultarEstado('statusRadicado', 'statusResult')">
+                    <img src="search-icon.png" alt="Buscar" style="width: 20px; height: 20px;">
+                </button>
+            </form>
+            <label for="statusResult">El estado de su solicitud es:</label>
+            <input type="text" id="statusResult" name="statusResult" readonly value="El radicado se encuentra en estado en proceso">
+            <p><a href="#" onclick="showSection('mainMenu')">Volver al Menú Principal</a></p>
+        </div>
+
+        <div id="consultSection" class="section" style="display:none;">
+            <h2>Consultar</h2>
+            <h3>Seleccione la forma de consulta:</h3>
+            <form id="consultForm">
+                <label for="consultRadicado"># de Radicado:</label>
+                <input type="text" id="consultRadicado" name="consultRadicado">
+                <button type="button" onclick="consultarEstado('consultRadicado', 'consultResult')">
+                    <img src="search-icon.png" alt="Buscar" style="width: 20px; height: 20px;">
+                </button>
+                <br><br>
+                <label for="consultDocument"># de Documento del Cliente:</label>
+                <input type="text" id="consultDocument" name="consultDocument">
+                <button type="button" onclick="consultarEstado('consultDocument', 'consultResult')">
+                    <img src="search-icon.png" alt="Buscar" style="width: 20px; height: 20px;">
+                </button>
+                <br><br>
+                <label for="consultDate">Seleccione Fecha:</label>
+                <input type="date" id="consultDate" name="consultDate">
+            </form>
+            <p><a href="#" onclick="showSection('mainMenu')">Volver al Menú Principal</a></p>
+        </div>
+
+        <div id="paymentsSection" class="section" style="display:none;">
+            <h2>Consulta de Pago y Envío</h2>
+            <form id="paymentsForm">
+                <label for="paymentRadicado">Digite Número de Radicado y/o Factura:</label>
+                <input type="text" id="paymentRadicado" name="paymentRadicado" required>
+                <button type="button" onclick="consultarEstado('paymentRadicado', 'paymentResult')">
+                    <img src="search-icon.png" alt="Buscar" style="width: 20px; height: 20px;">
+                </button>
+                <br><br>
+                <label for="paymentId">Número de Identificación:</label>
+                <input type="text" id="paymentId" name="paymentId" required>
+                <br><br>
+                <label for="paymentAmount">Valor a Pagar:</label>
+                <input type="text" id="paymentAmount" name="paymentAmount" required>
+                <br><br>
+                <label for="paymentDescription">Descripción del Pago:</label>
+                <textarea id="paymentDescription" name="paymentDescription" required></textarea>
+                <br><br>
+                <button type="submit">Continuar</button>
+            </form>
+            <p><a href="#" onclick="showSection('mainMenu')">Volver al Menú Principal</a></p>
+        </div>
+
+        <div id="ratingsSection" class="section" style="display:none;">
+            <h2>Calificar Servicio</h2>
+            <form id="ratingsForm">
+                <label for="ratingsRadicado">Digite Número de Radicado y/o Solicitud:</label>
+                <input type="text" id="ratingsRadicado" name="ratingsRadicado" required>
+                <button type="button" onclick="buscarRadicado()">
+                    <img src="search-icon.png" alt="Buscar" style="width: 20px; height: 20px;">
+                </button>
+                <br><br>
+                <label for="ratingsNivel">Seleccione Nivel de Calificación:</label>
+                <select id="ratingsNivel" name="ratingsNivel" required>
+                    <option value="excelente">Excelente</option>
+                    <option value="bueno">Bueno</option>
+                    <option value="regular">Regular</option>
+                    <option value="malo">Malo</option>
+                </select>
+                <br><br>
+                <label for="ratingsSugerencias">Sugerencias o Solicitudes:</label>
+                <textarea id="ratingsSugerencias" name="ratingsSugerencias" maxlength="300" required></textarea>
+                <br><br>
+                <button type="button" onclick="enviarCalificacion()">Continuar</button>
+            </form>
+            <p id="ratingsMessage"></p>
+            <p><a href="#" onclick="showSection('mainMenu')">Volver al Menú Principal</a></p>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
